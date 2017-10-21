@@ -112,6 +112,7 @@ class DatabaseObject extends DynamicObject {
 
 	public function save() {
 		$pairs = array();
+		//echo '<p>Trying to save in: '.$this->tableName.'</p>';
 
 		foreach ($this->attributeNames as $attributeName => $isNullable) {
 
