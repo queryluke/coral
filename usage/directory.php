@@ -86,9 +86,9 @@ function format_date($mysqlDate) {
 
   if ($mysqlDate != ""){
    if ((date("Hi", strtotime($mysqlDate)) > 0)){
-    return date("m/d/Y h:i a", strtotime($mysqlDate));
+    return date("d-m-Y h:i a", strtotime($mysqlDate));
    }else{
-    return date("m/d/Y", strtotime($mysqlDate));
+    return date("d-m-Y", strtotime($mysqlDate));
    }
 
   }else{

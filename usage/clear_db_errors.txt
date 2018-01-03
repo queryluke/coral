@@ -1,0 +1,6 @@
+delete from MonthlyUsageSummary;
+delete from Platform;
+delete from PlatformNote;
+delete from Title;
+delete from TitleIdentifier;
+delete from YearlyUsageSummary;

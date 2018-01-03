@@ -49,10 +49,12 @@ if($startMonth <= $endMonth) {
 }
 else {
 	$endYear = $startYear + 1;
-	$multYear = true;//lets us know that we need to account for multiple years
+	$multYear = false;//lets us know that we need to account for multiple years
 	$holdEndMonth = $endMonth;
 	$endMonth = 12;
 }
+
+//var_dump($multYear);
 
 if ($_POST['checkYear'] == NULL)
 	$year = $startYear;
@@ -682,7 +684,10 @@ while (!feof($file_handle)) {
 			}
 
 			//now we can insert the actual stats
+        //echo '<p>working on stats</p>.';
+			  //echo "<p>start month: $startMonth, end month: $endMonth";
 			for ($i=$startMonth; $i<=$endMonth; $i++){
+			  //echo "<p>i = $i";
 				$usageCount = '';
 
 				if ((isset($month[$i])) && ($month[$i] != '')){
@@ -797,6 +802,9 @@ while (!feof($file_handle)) {
 						$monthlyUsageSummary->overrideUsageCount = null;
 						$monthlyUsageSummary->sectionType = $sectionType;
 						$monthlyUsageSummary->activityType = $activityType;
+						//echo '<pre>';
+						//var_dump($monthlyUsageSummary->attributes);
+						//echo '</pre>';
 
 						try {
 							$monthlyUsageSummary->save();
@@ -830,6 +838,7 @@ while (!feof($file_handle)) {
 					//end usage count is entered
 				}
 				if ($i == 12 && $multYear) {
+				  echo '<p>working through multiyear</p>';
 					$year = $endYear;
 					$startMonth = 1;
 					$endMonth = $holdEndMonth;
@@ -964,6 +973,7 @@ $util = new Utility();
 $Base_URL = $util->getCORALURL() . "usage/";
 
 $mailOutput='';
+var_dump($emailAddress);
 if (count($emailAddresses) > 0){
 	$email = new Email();
 	$email->to 			= implode(", ", $emailAddresses);
