@@ -16,7 +16,6 @@
 **************************************************************************************************************************
 */
 
-
 ini_set("auto_detect_line_endings", true); //sometimes with macs...
 include_once 'directory.php';
 
@@ -37,33 +36,39 @@ $layoutID = $_POST['layoutID'];
 $importLogID = $_POST['importLogID'];
 $startDate = $_POST['startDate'];
 $numMonths = $_POST['numMonths'];
-$startYearArr = explode("-", $startDate);
-$startYear = $startYearArr[1];
-$startMonthArr = explode("-", $startDate);
-$startMonth = date("n",strtotime($startMonthArr[0]));
-$holdStartMonth = $startMonth;
-$endMonth = date("n",mktime(0,0,0,$startMonth+$numMonths-1));
-if($startMonth <= $endMonth) {
-	$endYear = $startYear;
-	$multYear = false;//lets us know that we don't need to account for multiple years
-}
-else {
-	$endYear = $startYear + 1;
-	$multYear = false;//lets us know that we need to account for multiple years
-	$holdEndMonth = $endMonth;
-	$endMonth = 12;
+
+if(empty($startDate)){
+    $startMonth = null;
+    $holdStartMonth = null;
+    $endMonth = null;
+    $startYear = $_POST['checkYear'];
+} else {
+    $startYearArr = explode("-", $startDate);
+    $startYear = $startYearArr[1];
+    $startMonthArr = explode("-", $startDate);
+    $startMonth = date("n",strtotime($startMonthArr[0]));
+    $holdStartMonth = $startMonth;
+    $endMonth = date("n",mktime(0,0,0,$startMonth+$numMonths-1));
 }
 
-//var_dump($multYear);
+if(empty($startMonth) || $startMonth <= $endMonth) {
+    $endYear = $startYear;
+    $multYear = false;//lets us know that we don't need to account for multiple years
+} else {
+    $endYear = $startYear + 1;
+    $multYear = true;//lets us know that we need to account for multiple years
+    $holdEndMonth = $endMonth;
+    $endMonth = 12;
+}
 
-if ($_POST['checkYear'] == NULL)
-	$year = $startYear;
-else
-	$year = $_POST['checkYear'];
+if ($_POST['checkYear'] == NULL){
+    $year = $startYear;
+} else {
+    $year = $_POST['checkYear'];
+}
+
 $pISSNArray = array();
 $platformArray = array();
-
-
 
 $layout = new Layout(new NamedArguments(array('primaryKey' => $_POST['layoutID'])));
 $layoutKey = $layoutsArray['ReportTypes'][$layout->layoutCode];
