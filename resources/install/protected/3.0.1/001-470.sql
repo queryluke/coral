@@ -1,5 +1,6 @@
 DROP PROCEDURE IF EXISTS add_missing_taxfield;
 
+DELIMITER //
 CREATE DEFINER=CURRENT_USER PROCEDURE add_missing_taxfield(missing_taxfield TEXT charset utf8)
 BEGIN
 DECLARE colName TEXT;
@@ -14,7 +15,8 @@ IF colName is null THEN
   EXECUTE stmt;
   DEALLOCATE PREPARE stmt;
 END IF;
-END;
+END//
+DELIMITER ;
 
 CALL add_missing_taxfield('priceTaxExcluded');
 CALL add_missing_taxfield('taxRate');
