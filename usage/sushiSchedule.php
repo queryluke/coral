@@ -38,7 +38,8 @@ foreach ($sushiServicesArray as $sushiService){
 
  	//try to run!
 	try {
-		$emailLog .= nl2br($sushiService->runAll($_POST['overwritePlatform']));
+	  $overwritePlatform = isset($_POST['overwritePlatform']) ? filter_input(INPUT_POST, 'overwritePlatform', FILTER_VALIDATE_BOOLEAN) : true;
+		$emailLog .= nl2br($sushiService->runAll($overwritePlatform));
 	} catch (Exception $e) {
 		$emailLog .= nl2br($e->getMessage());
 	}
