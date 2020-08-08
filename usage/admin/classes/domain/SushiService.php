@@ -1121,6 +1121,7 @@ class SushiService extends DatabaseObject
       'Print_ISSN' => 'issn',
       'Online_ISSN' => 'eissn',
       'URI' => 'uri',
+      'YOP' => 'yop',
       'Section_Type' => 'sectionType',
       'Access_Type' => 'accessType',
       'Publication_Date' => 'publicationDate',
